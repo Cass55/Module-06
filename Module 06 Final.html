@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>JavaScript Assignment 6</title>
+	<script src="script.js"></script>
+	<script>
+	function changeBackground(color) {
+  document.body.style.background = color;
+}
+window.addEventListener("load",function() { changeBackground('blue') });
+</script>
+	</head>
+	<body>
+	<div id="dogInfoContainer"></div>
+	<script>
+// Constuctor function for Dog objects
+function Dog(name, TVShow, breed, characterType, mySound, species, gender, occupation, canTalk) {
+	this.name = name;
+	this.TVShow = TVShow;
+	this.breed = breed;
+	this.characterType = characterType;
+	this.mySound = mySound;
+	this.species = species;
+	this.gender = gender;
+	this.occupation = occupation;
+	this.canTalk = canTalk; // Assigning canTalk
+	// Method to display information about the dog
+	this.myGreeting = function() {
+		let soundDescription = this.canTalk ? "I can talk!" : "I cannot talk.";
+		return "Hello, my name is " + this.name + ". " + soundDescription + " When I bark, " + this.mySound + ". I starred in the TV Show " + this.TVShow + 
+		". My character was a " + this.breed + " " + this.species + ". I was the " + this.characterType + ". I was their " + this.occupation + ".";
+		};
+	}
+	// Array of Dog objects
+	let dogs = [
+		new Dog("Courage", "Courage the Cowardly Dog", "Beagle", "family dog in the cartoon about an elderly couple who live in the middle of nowhere", 
+		"You might not be scared, but you should be!", "Dog", "Male", "Pet", "I can talk", true),
+		new Dog("Snoopy", "Peanuts", "Beagle", "family pet of Charlie Brown", "I laugh", "Dog", "Male", "Pet", "I can talk", true),
+		new Dog("Santa's Little Helper", "The Simpsons", "Greyhound", "pet dog of the Simpson Family", "Bark", "Dog", "Male", "Pet", "I cannot talk", false)
+		];
+		
+let selectedDog;
+// Loop until a valid selection is made
+while (!selectedDog) {
+	// Display list
+	let dogNamesList = "Choose a dog: \n";
+	for (let i = 0; i < dogs.length; i++) {
+	dogNamesList += (i + 1) + ". " + dogs[i].name + "\n";
+	}
+	let userInput = prompt(dogNamesList);
+	
+	// Find the selected dog
+	selectedDog = dogs.find(dog =>
+	dog.name === userInput);
+	
+	// Check if a dog was selected
+	if (!selectedDog) {
+		alert("Error: Invalid dog name.");
+	}
+}
+	
+// Display information about selected dog
+alert(selectedDog.myGreeting());
+// Display selected dog's information
+let dogInfo = "<div>";
+dogInfo += "<h2>" + selectedDog.name + "</h2>";
+dogInfo += "<p>" + selectedDog.myGreeting() + "</p>";
+for (let prop in selectedDog) {
+	if
+(selectedDog.hasOwnProperty(prop) && prop !== "myGreeting") {
+	dogInfo += "<p>" + prop + ": " + selectedDog[prop] + "</p>";
+	}
+}
+dogInfo += "</div>";
+document.getElementById("dogInfoContainer").innerHTML = dogInfo;
+</script>
+</body>
+</html>
